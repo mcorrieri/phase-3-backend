@@ -64,6 +64,7 @@ GEM
       thread_safe (~> 0.1)
 
 PLATFORMS
+  x86_64-darwin-18
   x86_64-darwin-20
 
 DEPENDENCIES
@@ -79,4 +80,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   2.2.13
+   2.2.17
