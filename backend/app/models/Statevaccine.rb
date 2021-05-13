@@ -50,7 +50,7 @@ class Statevaccine < ActiveRecord::Base
     #vaccine data for landing national data page
     def self.national_by_vaccine
         self_nat_vac_arr = self.group('vaccine_id')
-                                .pluck("Vaccine.find(vaccine_id).name, sum(first_dose_allocation)")
+                                .pluck("vaccine_id, sum(first_dose_allocation)")
         
         self_nat_vac_arr
     end
@@ -64,5 +64,23 @@ class Statevaccine < ActiveRecord::Base
                             .pluck("allocation_date, sum(first_dose_allocation)")
 
         self_nat_arr.to_h
+    end
+
+    def self.national_data
+        start_date = self.start_date
+        nat_by_vac = self.national_by_vaccine
+        moderna = nat_by_vac[0][1]
+        pfizer = nat_by_vac[1][1]
+        janssen = nat_by_vac[2][1]
+        total_vaccine = self.national_vaccinated
+        total_vaccine_percent = self.national_percentage_vaccinated
+        nat_hash = { 
+          lastDate: start_date,
+          moderna: moderna,
+          pfizer: pfizer, 
+          janssen: janssen,
+          totalVaccines: total_vaccine,
+          percentVacc: total_vaccine_percent }
+        nat_array = [nat_hash]
     end
 end
