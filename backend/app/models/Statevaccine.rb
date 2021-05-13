@@ -37,4 +37,32 @@ class Statevaccine < ActiveRecord::Base
         output_array
 
     end
+
+    def self.national_vaccinated
+        self.sum(:first_dose_allocation)
+    end 
+
+    def self.national_percentage_vaccinated
+        percentage_vaccinated = Float(Float(self.national_vaccinated) / Float(State.total_population)) * 100
+        percentage_vaccinated
+    end
+
+    #vaccine data for landing national data page
+    def self.national_by_vaccine
+        self_nat_vac_arr = self.group('vaccine_id')
+                                .pluck("Vaccine.find(vaccine_id).name, sum(first_dose_allocation)")
+        
+        self_nat_vac_arr
+    end
+
+    # data for landing national data page chart
+    def self.national_chart
+
+        #group and order table by allocation, then pull out allocation_date as well as summ the first_dose_allocation
+        self_nat_arr = self.group('allocation_date')
+                            .order('allocation_date')
+                            .pluck("allocation_date, sum(first_dose_allocation)")
+
+        self_nat_arr.to_h
+    end
 end

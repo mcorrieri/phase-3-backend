@@ -7,5 +7,9 @@ class State < ActiveRecord::Base
         self.order("name ASC").pluck(:name)
     end
 
+    def self.total_population
+        self.sum(:population)
+    end
+
     
 end
