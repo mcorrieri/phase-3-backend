@@ -60,11 +60,11 @@ class Statevaccine < ActiveRecord::Base
 
         #group and order table by allocation, then pull out allocation_date as well as summ the first_dose_allocation
         self_nat_arr = self.group('allocation_date')
-                            .order('allocation_date')
+                            .order('allocation_date DESC')
                             .pluck("allocation_date, sum(first_dose_allocation)")
 
-        nat_chart_arr = []
-        nat_chart_arr = [self_nat_arr.to_h]
+        
+        self_nat_arr.to_h
         
     end
 
