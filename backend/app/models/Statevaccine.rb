@@ -63,7 +63,9 @@ class Statevaccine < ActiveRecord::Base
                             .order('allocation_date')
                             .pluck("allocation_date, sum(first_dose_allocation)")
 
-        self_nat_arr.to_h
+        nat_chart_arr = []
+        nat_chart_arr = [self_nat_arr.to_h]
+        
     end
 
     def self.national_data
