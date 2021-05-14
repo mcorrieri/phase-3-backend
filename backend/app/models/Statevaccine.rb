@@ -60,12 +60,15 @@ class Statevaccine < ActiveRecord::Base
 
         #group and order table by allocation, then pull out allocation_date as well as summ the first_dose_allocation
         self_nat_arr = self.group('allocation_date')
-                            .order('allocation_date DESC')
-                            .pluck("allocation_date, sum(first_dose_allocation)")
-
+            .order('allocation_date')
+            .pluck("allocation_date, sum(first_dose_allocation)")
+        
+        
+       
         # symbolize_keys is probably not needed
         self_nat_arr.to_h.symbolize_keys
-        
+       
+
     end
 
     def self.national_data
