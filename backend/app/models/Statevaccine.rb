@@ -63,8 +63,8 @@ class Statevaccine < ActiveRecord::Base
                             .order('allocation_date DESC')
                             .pluck("allocation_date, sum(first_dose_allocation)")
 
-        
-        self_nat_arr.to_h
+        # symbolize_keys is probably not needed
+        self_nat_arr.to_h.symbolize_keys
         
     end
 
